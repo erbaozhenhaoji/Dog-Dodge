@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🐶 金毛狗躲避老太太 - Python Web小游戏</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐶</text></svg>">
+</head>
+<body>
+
+    <div class="game-container">
+        <!-- Main Game Area -->
+        <div class="main-card">
+            <div class="game-header">
+                <div class="game-title">
+                    <span>🐶</span> 金毛狗大冒险
+                </div>
+                <div class="header-controls">
+                    <button id="soundToggleBtn" class="icon-btn" title="开关音效">
+                        <span id="soundIcon">🔊</span> 音效: 开
+                    </button>
+                    <button id="pauseBtn" class="icon-btn" title="暂停游戏">
+                        ⏸️ 暂停
+                    </button>
+                </div>
+            </div>
+
+            <div class="canvas-wrapper">
+                <!-- Heads Up Display -->
+                <div class="hud-bar">
+                    <div class="hud-pill">得分: <span id="scoreDisplay">0</span></div>
+                    <div class="hud-pill">躲避: <span id="dodgeDisplay">0</span> 人</div>
+                </div>
+
+                <!-- Main Game Canvas -->
+                <canvas id="gameCanvas" width="440" height="640"></canvas>
+
+                <!-- Start Screen Overlay -->
+                <div id="startScreen" class="overlay-screen">
+                    <div class="modal-icon">🐕👵</div>
+                    <div class="modal-title">白色金毛大逃亡</div>
+                    <div class="modal-subtitle">掌控你的可爱金毛狗，躲避迎面而来的老太太们！</div>
+                    
+                    <div class="instruction-box">
+                        <div class="instruction-item">
+                            <span>键盘控制:</span>
+                            <span class="key-badge">←</span> <span class="key-badge">→</span> 或 <span class="key-badge">A</span> <span class="key-badge">D</span>
+                        </div>
+                        <div class="instruction-item">
+                            <span>手机控制:</span> 点击屏幕下方按钮或拖拽左右移动
+                        </div>
+                        <div class="instruction-item">
+                            <span>额外奖励:</span> 收集 🦴 狗骨头 可获得额外积分！
+                        </div>
+                        <div class="instruction-item">
+                            <span>注意:</span> 撞到👵老太太游戏立即结束！
+                        </div>
+                    </div>
+
+                    <button id="startGameBtn" class="btn-primary">开始游戏 🚀</button>
+                </div>
+
+                <!-- Pause Overlay -->
+                <div id="pauseScreen" class="overlay-screen hidden">
+                    <div class="modal-icon">⏸️</div>
+                    <div class="modal-title">游戏已暂停</div>
+                    <div class="modal-subtitle">休息一下，随时准备继续奔跑！</div>
+                    <button id="resumeGameBtn" class="btn-primary">继续游戏 ▶️</button>
+                </div>
+
+                <!-- Game Over Overlay -->
+                <div id="gameOverScreen" class="overlay-screen hidden">
+                    <div class="modal-icon">💥🐶</div>
+                    <div class="modal-title">游戏结束！</div>
+                    <div class="modal-subtitle" id="gameOverMsg">不小心撞到老太太啦！</div>
+
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">本次得分</div>
+                            <div class="stat-value" id="finalScore">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">成功躲避</div>
+                            <div class="stat-value" id="finalDodges">0</div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="playerNameInput">登记英雄榜大名:</label>
+                        <input type="text" id="playerNameInput" maxlength="10" placeholder="快乐的小金毛" value="小金毛">
+                    </div>
+
+                    <button id="restartGameBtn" class="btn-primary">提交分数并重新开始 🔄</button>
+                </div>
+            </div>
+
+            <!-- Mobile Controls -->
+            <div class="mobile-controls">
+                <button id="btnLeft" class="touch-btn">◀️ 往左跑</button>
+                <button id="btnRight" class="touch-btn">往右跑 ▶️</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard Side Panel -->
+        <div class="side-panel">
+            <div class="panel-title">
+                🏆 全球狗狗排行榜
+            </div>
+            <ul id="leaderboardList" class="leaderboard-list">
+                <li class="leaderboard-item">加载英雄榜中...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>
